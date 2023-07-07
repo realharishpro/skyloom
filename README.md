@@ -51,9 +51,6 @@ http://103.14.123.98:8000/
 - Username: admin
 - Password: adminpassword
 
-## Contributing
-
-Contributions are welcome! If you would like to contribute to this project, please fork the repository and create a new branch for your feature or bug fix. Submit a pull request with your changes, and they will be reviewed and merged.
 
 ## License
 
