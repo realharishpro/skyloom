@@ -24,10 +24,21 @@ The Flight Booking System is a web application that allows users to search for f
 ## Installation and Usage
 
 1. Clone the repository: `git clone https://github.com/skyloom/skyloom.git`
-2. Install dependencies: `pip install -r requirements.txt`
-3. Set up the database: Create a PostgreSQL database and update the database URI in the configuration file.
-4. Run the application: `python app.py`
-5. Access the application in a web browser at `http://localhost:8000`
+2. Create and activate a virtual environment:
+   - On Windows:
+     ```
+     python -m venv venv
+     venv\Scripts\activate
+     ```
+   - On macOS and Linux:
+     ```
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+3. Install dependencies: `pip install -r requirements.txt`
+4. Set up the database: Create a PostgreSQL database and update the database URI in the configuration file.
+5. Run the application: `python app.py`
+6. Access the application in a web browser at `http://localhost:8000`
 
 ## Demo Account
 
