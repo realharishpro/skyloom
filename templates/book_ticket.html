@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Ticket</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Book Ticket</h1>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <form method="POST" action="/book_ticket">
+                    <div class="form-group">
+                        <label for="flight_id">Flight ID:</label>
+                        <input type="text" class="form-control" id="flight_id" name="flight_id" value="{{ flight.id }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticket_count">Ticket Count:</label>
+                        <input type="number" class="form-control" id="ticket_count" name="ticket_count" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Book Ticket</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

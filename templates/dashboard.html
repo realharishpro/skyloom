@@ -1,0 +1,418 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>User Dashboard | SkyLoom - Book your Happiness</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/css/odometer.css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/default.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- preloader -->
+    <div id="preloader">
+        <div id="loading-center">
+            <div class="loader">
+                <div class="loader-outter"></div>
+                <div class="loader-inner"></div>
+            </div>
+        </div>
+    </div>
+    <!-- preloader-end -->
+
+    <!-- Scroll-top -->
+    <button class="scroll-top scroll-to-target" data-target="html">
+        <i class="fas fas fa-angle-up"></i>
+    </button>
+    <!-- Scroll-top-end-->
+
+    <!-- header-area -->
+    <header>
+        <div class="header-top">
+            <div class="container custom-container">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="header-top-left">
+                            <a href="/">Start planning your next journey with <b>SkyLoom.com</b> today and enjoy the
+                                convenience of booking flights at your fingertips!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="sticky-header" class="menu-area menu-style-two">
+            <div class="container custom-container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="menu-wrap">
+                            <nav class="menu-nav">
+                                <div class="logo"><a href="/"><img src="assets/img/logo/logo.png" alt=""></a></div>
+                                <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                    <ul class="navigation">
+                                        {% if user %}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/logout">Logout</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/signin">Login</a>
+                                        </li>
+                                    {% endif %}
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-area-end -->
+
+
+    <!-- main-area -->
+    <main>
+
+        <!-- breadcrumb-area -->
+        <section class="breadcrumb-area breadcrumb-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="breadcrumb-content text-center">
+                            <h2 class="title">Welcome, {{ user.username }}!</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item" style="color: white;">Your Balance: {{ user.balance|float_to_str }}</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+        <!-- booking-area -->
+        <div class="booking-area booking-style-two">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="booking-wrap">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="bOOKing-tab" data-bs-toggle="tab"
+                                        data-bs-target="#bOOKing-tab-pane" type="button" role="tab"
+                                        aria-controls="bOOKing-tab-pane" aria-selected="true"><i class="flaticon-flight"></i>BOOKING</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="trips-tab" data-bs-toggle="tab"
+                                        data-bs-target="#trips-tab-pane" type="button" role="tab" aria-controls="trips-tab-pane"
+                                        aria-selected="false"><i class="flaticon-file"></i>My Bookings</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="add-fund" data-bs-toggle="tab"
+                                        data-bs-target="#add-fund-pane" type="button" role="tab" aria-controls="add-fund-pane"
+                                        aria-selected="false"><i class="flaticon-tick"></i> Add fund</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="bOOKing-tab-pane" role="tabpanel"
+                                    aria-labelledby="bOOKing-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="tab-content-wrap">
+                                                <div class="content-top">
+                                                    <ul>
+                                                        <li class="active"><a href="#">One-way</a></li>
+                                                        <li><a href="#">Roundtrip</a></li>
+                                                        <li><a href="#">Multi-city</a></li>
+                                                    </ul>
+                                                </div>
+                                                <form class="booking-form" method="POST" action="/dashboard">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="form-grp select">
+                                                                <label for="from_location">From</label>
+                                                                <select id="from_location" name="from_location" class="form-select" aria-label="Select From Location">
+                                                                    {% for location in locations %}
+                                                                        <option value="{{ location }}">{{ location }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-grp select">
+                                                                <label for="to_location">To</label>
+                                                                <select id="to_location" name="to_location" class="form-select" aria-label="Select To Location">
+                                                                    {% for location in locations2 %}
+                                                                        <option value="{{ location }}">{{ location }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-grp select">
+                                                                <label for="shortBy">Class</label>
+                                                                <select id="shortBy" name="select" class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option>Economy</option>
+                                                                </select>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-grp date" id="date" name="date" required>
+                                                                <ul>
+                                                                    <li>
+                                                                        <label for="shortBy">Depart</label>
+                                                                        <input type="text" class="date" id="date" name="date"
+                                                                            placeholder="Select Date">
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="form-grp economy">
+                                                                <label for="text">Passenger</label>
+                                                                <input type="number" id="num_passengers" name="num_passengers" min="1" max='6' value='1' required>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <button class="btn" type="submit" >Show Flights <i
+                                                                    class="fas fa solid fas fa-plane-departure"></i></button></li>
+                                                        </ul>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="trips-tab-pane" role="tabpanel" aria-labelledby="trips-tab"
+                                        tabindex="0">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="tab-content-wrap">
+                                                    <h2 style="color: #ffa903;">Your Bookings</h2>
+                                                    <table class="table table-striped" style="color: #3167b9;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Booking ID</th>
+                                                                <th>Flight Name</th>
+                                                                <th>From</th>
+                                                                <th>To</th>
+                                                                <th>Passenger Name</th>
+                                                                <th>Passenger Age</th>
+                                                                <th>Passenger Gender</th>
+                                                                <th>PNR Number</th>
+                                                                <th>Amount Paid</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for booking in bookings %}
+                                                            <tr>
+                                                                <td>{{ booking.id }}</td>
+                                                                <td>{{ booking.flight.name }}</td>
+                                                                <td>{{ booking.flight.from_location }}</td>
+                                                                <td>{{ booking.flight.to_location }}</td>
+                                                                <td>
+                                                                    {% for passenger in booking.passengers %}
+                                                                        {{ passenger.name }}{% if not loop.last %}, {% endif %}
+                                                                    {% endfor %}
+                                                                </td>
+                                                                <td>
+                                                                    {% for passenger in booking.passengers %}
+                                                                        {{ passenger.age }}{% if not loop.last %}, {% endif %}
+                                                                    {% endfor %}
+                                                                </td>
+                                                                <td>
+                                                                    {% for passenger in booking.passengers %}
+                                                                        {{ passenger.gender }}{% if not loop.last %}, {% endif %}
+                                                                    {% endfor %}
+                                                                </td>
+                                                                <td>{{ booking.pnr_number }}</td>
+                                                                <td>{{ booking.amount_paid|float_to_str }}</td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="tab-pane fade" id="add-fund-pane" role="tabpanel" aria-labelledby="add-fund"
+                                        tabindex="0">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="tab-content-wrap">
+                                                    <div class="content-top">
+                                                        <ul>
+                                                            <li class="active">Add Fund to Balance</li>
+                                                        </ul>
+                                                    </div>
+                                                    <form method="POST" action="/dashboard">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-grp">
+                                                                    <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter Amount" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-grp">
+                                                                        <button type="submit" class="btn" style="color: white; background-color: #3167b9; padding: .7rem 1.55rem;font-size: 1rem;">Add Fund</button>
+                                                                    </div>
+                                                            </div>
+                                                        </div>    
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- booking-area-end -->
+
+        <!-- booking-list-area -->
+        <div class="booking-list-area">
+            <div class="container">
+                <div class="row justify-content-center">
+                    {% if flights %}
+                    <div class="col">
+                        {% for flight in flights %}
+                        <div class="booking-list-item">
+                            <div class="booking-list-item-inner">
+                                <div class="booking-list-top">
+                                    <div class="flight-airway" style="min-width: 20%;">
+                                        <div class="flight-logo">
+                                            <img src="assets/img/icon/booking_icon01.jpg" alt="">
+                                            <h5 class="title">{{ flight.name }}</h5>
+                                        </div>
+                                    </div>
+                                    <ul class="flight-info">
+                                        <li>{{ flight.datetime }}<span>
+                                            FROM: <b>{{ flight.from_location }}</b>
+                                        </span></li>
+                                        <li>{{ flight.duration }}<span>
+                                            TO: <b>{{ flight.to_location }}</b>
+                                        </span></li>
+                                    </ul>
+                                    <div class="flight-price">
+                                        <h4 class="title">Rs. {{ flight.cost|float_to_str }}</h4>
+                                    </div>
+                                    <div class="flight-price">
+                                        <form method="POST" action="/book_ticket">
+                                            <div class="row">
+                                                <input type="hidden" name="flight_id" value="{{ flight.id }}">
+                                                <input type="number" class="form-control" name="ticket_count" value="1" min="1" max="6">
+                                            </div>
+                                            {% if flight.seats > 0 %}
+                                            
+                    {% else %}
+                        No Seats Available
+                    {% endif %}
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="flight-price">
+                                        <a href="#" onclick="updateTicketCount({{ flight.id }})"> <button class="btn" type='submit' style="color: white; background-color: #3167b9; padding: .7rem 1.55rem;font-size: 1rem;">Book Ticket</button></a>
+                                    </div>
+                                </div>
+                                <div class="booking-list-bottom">
+                                    <ul>
+                                        <li>* Terms and Conditions apply</li>
+                                        <li>Price per person (incl. taxes & fees)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+    <p>No flights found.</p>
+{% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- booking-list-area-end -->
+
+    </main>
+    <!-- main-area-end -->
+
+    <!-- footer-area -->
+    <footer>
+        <div class="footer-area footer-bg">
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="copyright-text">
+                                <p>Copyright © 2023.All Rights Reserved By <span>SkyLoom.com</span></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="cart-img text-end">
+                                <img src="assets/img/images/cart.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer-area-end -->
+
+
+    <!-- JS here -->
+    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/jquery.odometer.min.js"></script>
+    <script src="assets/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.appear.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        function redirectToBooking() {
+            // Check if the user is signed in
+            {% if 'username' in session %}
+                window.location.href = '/dashboard';  // Redirect to booking page
+            {% else %}
+                window.location.href = '/signin';  // Redirect to signin page
+            {% endif %}
+        }
+    </script>
+    <script>
+        function updateTicketCount(flightId) {
+            var ticketCount = document.getElementsByName('ticket_count')[0].value;
+            var url = "/passenger_details?flight_id=" + flightId + "&ticket_count=" + ticketCount;
+            window.location.href = url;
+        }
+    </script>
+    
+</body>
+
+</html>

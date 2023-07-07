@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .card-primary {
+            background-color: purple;
+        }
+
+        .card-secondary {
+            background-color: #3167b9;
+        }
+
+        .card-tertiary {
+            background-color: green;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Admin Dashboard</h1>
+        <hr>
+
+        <!-- Logout Button -->
+        <div class="text-right">
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+        <br>
+
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white card-primary mb-3">
+                    <div class="card-header">Total Users</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>{{ users|length }}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white card-secondary mb-3">
+                    <div class="card-header">Total Flights</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>{{ flights|length }}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white card-tertiary mb-3">
+                    <div class="card-header">Total Funds in Hand</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>{{ total_funds|float_to_str }}</b></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Flight Button -->
+        <a href="/admin/add-flight" class="btn btn-primary">Add Flight</a>
+        <br><br>
+
+        <br><br>
+
+
+        <!-- Booking List -->
+        <h2>Recent Bookings</h2>
+        <table class="table table-striped" style="color: #3167b9;">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Flight No.</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Passenger Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>PNR</th>
+                    <th>Amount Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.flight.name }}</td>
+                    <td>{{ booking.flight.from_location }}</td>
+                    <td>{{ booking.flight.to_location }}</td>
+                    <td>
+                        {% for passenger in booking.passengers %}
+                            {{ passenger.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for passenger in booking.passengers %}
+                            {{ passenger.age }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for passenger in booking.passengers %}
+                            {{ passenger.gender }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ booking.pnr_number }}</td>
+                    <td>{{ booking.amount_paid|float_to_str }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br>
+        <!-- Flight List -->
+        <h3>Flight List</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Duration</th>
+                    <th>Date and Time</th>
+                    <th>Cost</th>
+                    <th>Seats Available</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                <tr>
+                    <td>{{ flight.name }}</td>
+                    <td>{{ flight.from_location }}</td>
+                    <td>{{ flight.to_location }}</td>
+                    <td>{{ flight.duration }}</td>
+                    <td>{{ flight.datetime }}</td>
+                    <td>{{ flight.cost|float_to_str }}</td>
+                    <td>{{ flight.seats }}</td>
+                    <td>
+                        <a href="edit-flight/{{ flight.id }}">Edit</a> |
+                        <a href="remove-flight/{{ flight.id }}">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#bookingsTable').DataTable();
+        });
+    </script>
+</body>
+</html>
